@@ -1,17 +1,97 @@
 GLOBAL main
 section .text
     main:
-        call rowround
+        call doubleround
 
-    rowround:
-        ;firstRow
+    doubleround:
+        call columnround
+
+    columnround:
+        ;firstColumn
             mov eax, dword[y]
             mov dword[a], eax
+            mov eax, dword[y+16]
+            mov dword[b], eax
+            mov eax, dword[y+32]
+            mov dword[c], eax
+            mov eax, dword[y+48]
+            mov dword[d], eax
+            call quarterround
+            mov eax, dword[e]
+            mov dword[x], eax
+            mov eax, dword[f]
+            mov dword[x+16], eax
+            mov eax, dword[g]
+            mov dword[x+32], eax
+            mov eax, dword[h]
+            mov dword[x+48], eax
+        
+        ;secondColumn
+            mov eax, dword[y+20]
+            mov dword[a], eax
+            mov eax, dword[y+36]
+            mov dword[b], eax
+            mov eax, dword[y+52]
+            mov dword[c], eax
             mov eax, dword[y+4]
+            mov dword[d], eax
+            call quarterround
+            mov eax, dword[e]
+            mov dword[x+20], eax
+            mov eax, dword[f]
+            mov dword[x+36], eax
+            mov eax, dword[g]
+            mov dword[x+52], eax
+            mov eax, dword[h]
+            mov dword[x+4], eax
+
+        ;thirdColumn
+            mov eax, dword[y+40]
+            mov dword[a], eax
+            mov eax, dword[y+56]
             mov dword[b], eax
             mov eax, dword[y+8]
             mov dword[c], eax
+            mov eax, dword[y+24]
+            mov dword[d], eax
+            call quarterround
+            mov eax, dword[e]
+            mov dword[x+40], eax
+            mov eax, dword[f]
+            mov dword[x+56], eax
+            mov eax, dword[g]
+            mov dword[x+8], eax
+            mov eax, dword[h]
+            mov dword[x+24], eax
+
+        ;fourthColumn
+            mov eax, dword[y+60]
+            mov dword[a], eax
             mov eax, dword[y+12]
+            mov dword[b], eax
+            mov eax, dword[y+28]
+            mov dword[c], eax
+            mov eax, dword[y+44]
+            mov dword[d], eax
+            call quarterround
+            mov eax, dword[e]
+            mov dword[x+60], eax
+            mov eax, dword[f]
+            mov dword[x+12], eax
+            mov eax, dword[g]
+            mov dword[x+28], eax
+            mov eax, dword[h]
+            mov dword[x+44], eax
+
+    rowround:
+        ;firstRow
+            mov eax, dword[x]
+            mov dword[a], eax
+            mov eax, dword[x+4]
+            mov dword[b], eax
+            mov eax, dword[x+8]
+            mov dword[c], eax
+            mov eax, dword[x+12]
             mov dword[d], eax
             call quarterround
             mov eax, dword[e]
@@ -24,13 +104,13 @@ section .text
             mov dword[z+12], eax
 
         ;secondRow     
-            mov eax, dword[y+20]
+            mov eax, dword[x+20]
             mov dword[a], eax
-            mov eax, dword[y+24]
+            mov eax, dword[x+24]
             mov dword[b], eax
-            mov eax, dword[y+28]
+            mov eax, dword[x+28]
             mov dword[c], eax
-            mov eax, dword[y+16]
+            mov eax, dword[x+16]
             mov dword[d], eax
             call quarterround
             mov eax, dword[e]
@@ -43,13 +123,13 @@ section .text
             mov dword[z+16], eax
         
         ;thirdRow
-            mov eax, dword[y+40]
+            mov eax, dword[x+40]
             mov dword[a], eax
-            mov eax, dword[y+44]
+            mov eax, dword[x+44]
             mov dword[b], eax
-            mov eax, dword[y+32]
+            mov eax, dword[x+32]
             mov dword[c], eax
-            mov eax, dword[y+36]
+            mov eax, dword[x+36]
             mov dword[d], eax
             call quarterround
             mov eax, dword[e]
@@ -62,13 +142,13 @@ section .text
             mov dword[z+36], eax
 
         ;fourthRow
-            mov eax, dword[y+60]
+            mov eax, dword[x+60]
             mov dword[a], eax
-            mov eax, dword[y+48]
+            mov eax, dword[x+48]
             mov dword[b], eax
-            mov eax, dword[y+52]
+            mov eax, dword[x+52]
             mov dword[c], eax
-            mov eax, dword[y+56]
+            mov eax, dword[x+56]
             mov dword[d], eax
             call quarterround
             mov eax, dword[e]
@@ -131,12 +211,18 @@ section .data
     g dd 0x00000000
     h dd 0x00000000
 
-     y dd 0x00000001,0x00000000,0x00000000,0x00000000
-       dd 0x00000001,0x00000000,0x00000000,0x00000000
-       dd 0x00000001,0x00000000,0x00000000,0x00000000
-       dd 0x00000001,0x00000000,0x00000000,0x00000000
+     y dd 0xde501066,0x6f9eb8f7,0xe4fbbd9b,0x454e3f57
+       dd 0xb75540d3,0x43e93a4c,0x3a6f2aa0,0x726d6b36,
+       dd 0x9243f484,0x9145d1e8,0x4fa9d247,0xdc8dee11,
+       dd 0x054bf545,0x254dd653,0xd9421b6d,0x67b276c1
 
+    ;Aqui se escribe el resultado
      z dd 0x00000000,0x00000000,0x00000000,0x00000000
+       dd 0x00000000,0x00000000,0x00000000,0x00000000
+       dd 0x00000000,0x00000000,0x00000000,0x00000000
+       dd 0x00000000,0x00000000,0x00000000,0x00000000
+    
+     x dd 0x00000000,0x00000000,0x00000000,0x00000000
        dd 0x00000000,0x00000000,0x00000000,0x00000000
        dd 0x00000000,0x00000000,0x00000000,0x00000000
        dd 0x00000000,0x00000000,0x00000000,0x00000000
